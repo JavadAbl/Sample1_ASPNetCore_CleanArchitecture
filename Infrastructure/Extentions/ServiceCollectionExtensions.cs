@@ -1,0 +1,29 @@
+﻿using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Infrastructure.Extentions;
+
+public static class ServiceCollectionExtensions
+{
+
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration conf)
+    {
+        AddDbContext(services, conf);
+    }
+
+
+    private static void AddDbContext(IServiceCollection services, IConfiguration conf)
+    {
+        var connectionString = conf.GetConnectionString("APP_DATABASE");
+        if (connectionString == null)
+            throw new Exception("connectionString not found");
+
+        services.AddDbContext<AppDbContext>(op =>
+        {
+            op.UseSqlite(connectionString);
+        });
+    }
+}
+
