@@ -1,0 +1,1 @@
+# Sample1_ASPCore_CleanArchitecture
