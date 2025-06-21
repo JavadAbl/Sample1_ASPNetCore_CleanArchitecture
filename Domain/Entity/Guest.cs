@@ -14,9 +14,8 @@ public class Guest
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public Guest_Address? Address { get; set; }
 
-
-
-
+    public Room? Room { get; set; }
+    public int RoomId { get; set; }
 
 }
 

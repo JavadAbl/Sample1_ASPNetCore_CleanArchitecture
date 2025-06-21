@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Database;
+using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +12,8 @@ public static class ServiceCollectionExtensions
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration conf)
     {
         AddDbContext(services, conf);
+        AddServices(services);
     }
-
 
     private static void AddDbContext(IServiceCollection services, IConfiguration conf)
     {
@@ -25,5 +26,11 @@ public static class ServiceCollectionExtensions
             op.UseSqlite(connectionString);
         });
     }
+
+    private static void AddServices(IServiceCollection services)
+    {
+        services.AddScoped<ISeeder, Seeder>();
+    }
+
 }
 
