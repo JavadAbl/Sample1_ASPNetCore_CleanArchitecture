@@ -1,28 +1,34 @@
-﻿using Domain.Dto;
+﻿using Application.Interfaces;
+using Domain.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
-public class GuestController : ControllerBase
+[Route("api/[controller]/[action]")]
+public class GuestController(IGuestService service) : ControllerBase
 {
-    [HttpGet]
-    public IActionResult GetUsers()
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetById(int id)
     {
-        // This is a placeholder for the actual implementation
-        return Ok("List of users");
+        var guest = await service.GetById(id);
+        if (guest == null)
+            return NotFound();
+
+        return Ok(guest);
     }
 
     [HttpPost]
-    public IActionResult CreateGuest([FromBody] CreateGuestDto guestDto)
+    public async Task<IActionResult> CreateGuest([FromBody] CreateGuestDto guestDto)
     {
         if (guestDto == null)
         {
             return BadRequest("User data is required.");
         }
+
+        var guestId = await service.Add(guestDto);
         // This is a placeholder for the actual implementation
-        return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
+        return Created();
     }
 }
 

@@ -12,6 +12,8 @@ internal class AppDbContext(DbContextOptions dbContextOptions) : DbContext(dbCon
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Guest>().OwnsOne(g => g.Address);
+
         modelBuilder.Entity<Room>().HasOne<Guest>(Room => Room.Guest)
             .WithOne(guest => guest.Room).HasForeignKey<Guest>(guest => guest.RoomId);
     }

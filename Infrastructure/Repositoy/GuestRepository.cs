@@ -1,6 +1,7 @@
 ﻿using Domain.Entity;
 using Domain.Repository;
 using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositoy;
 
@@ -28,9 +29,9 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         throw new NotImplementedException();
     }
 
-    public Task<Guest?> GetByIdAsync(int id)
+    public async Task<Guest?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await appDb.Guests.FirstOrDefaultAsync(g => g.Id == id);
     }
 
     public Task<Guest?> GetByPassNumberAsync(string passNumber)

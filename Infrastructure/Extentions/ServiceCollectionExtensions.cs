@@ -1,5 +1,7 @@
-﻿using Infrastructure.Database;
+﻿using Domain.Repository;
+using Infrastructure.Database;
 using Infrastructure.Interfaces;
+using Infrastructure.Repositoy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,11 +27,17 @@ public static class ServiceCollectionExtensions
         {
             op.UseSqlite(connectionString);
         });
+
+        /*services.AddDbContext<AppDbContext>(op =>
+        {
+            op.UseSqlite(connectionString, x => x.MigrationsAssembly("Infrastructure"));
+        });*/
     }
 
     private static void AddServices(IServiceCollection services)
     {
         services.AddScoped<ISeeder, Seeder>();
+        services.AddScoped<IGuestRepository, GuestRepository>();
     }
 
 }
