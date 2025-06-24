@@ -8,5 +8,6 @@ public class Cleaner
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
 
-    public ICollection<Room> Rooms { get; set; } = [];
+
+    public ICollection<RoomCleaner> RoomCleaners { get; set; } = [];
 }

@@ -1,7 +1,7 @@
 
 namespace Domain.Entity;
 
-public class RoomCleaners
+public class RoomCleaner
 {
     public int RoomId { get; set; }
     public required Room Room { get; set; }
