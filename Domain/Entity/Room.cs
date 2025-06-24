@@ -16,6 +16,7 @@ public class Room
 
     public Guest? Guest { get; set; }
 
+    public ICollection<Cleaner> Cleaners { get; set; } = [];
 
 }
 

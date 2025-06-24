@@ -7,15 +7,16 @@ internal class AppDbContext(DbContextOptions dbContextOptions) : DbContext(dbCon
 {
     internal DbSet<Guest> Guests { get; set; }
     internal DbSet<Room> Rooms { get; set; }
+    internal DbSet<Cleaner> Cleaners { get; set; }
+    internal DbSet<RoomCleaners> RoomCleaners { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
-        modelBuilder.Entity<Guest>().OwnsOne(g => g.Address);
+        modelBuilder.Entity<RoomCleaners>().HasOne(c => c.Room).WithMany<Cleaner>();
 
-        modelBuilder.Entity<Room>().HasOne<Guest>(Room => Room.Guest)
-            .WithOne(guest => guest.Room).HasForeignKey<Guest>(guest => guest.RoomId);
     }
 }
 
