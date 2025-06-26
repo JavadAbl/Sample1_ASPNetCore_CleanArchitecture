@@ -19,16 +19,10 @@ public class GuestController(IGuestService service) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateGuest([FromBody] CreateGuestDto guestDto)
+    public async Task<IActionResult> CreateGuest([FromBody] CreateGuestDto createGuestDto)
     {
-        if (guestDto == null)
-        {
-            return BadRequest("User data is required.");
-        }
-
-        var guestId = await service.Add(guestDto);
-        // This is a placeholder for the actual implementation
-        return Created();
+        var guestId = await service.Add(createGuestDto);
+        return Created("", guestId);
     }
 }
 

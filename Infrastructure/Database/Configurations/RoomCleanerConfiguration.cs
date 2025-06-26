@@ -9,8 +9,8 @@ internal class RoomCleanerConfiguration : IEntityTypeConfiguration<RoomCleaner>
     public void Configure(EntityTypeBuilder<RoomCleaner> builder)
     {
         builder.HasKey(rc => new { rc.RoomId, rc.CleanerId });
-        builder.HasOne<Room>().WithMany(r => r.RoomCleaners).HasForeignKey(rc => rc.RoomId);
-        builder.HasOne<Cleaner>().WithMany(r => r.RoomCleaners).HasForeignKey(rc => rc.CleanerId);
+        builder.HasOne(rc => rc.Room).WithMany(r => r.RoomCleaners).HasForeignKey(rc => rc.RoomId).IsRequired(true);
+        builder.HasOne(rc => rc.Cleaner).WithMany(r => r.RoomCleaners).HasForeignKey(rc => rc.CleanerId).IsRequired(true);
     }
 }
 

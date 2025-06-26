@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
     private static void AddServices(IServiceCollection services)
     {
         services.AddScoped<IGuestService, GuestService>();
+        services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
     }
 

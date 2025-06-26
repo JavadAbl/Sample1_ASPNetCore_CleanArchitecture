@@ -1,8 +1,8 @@
-﻿
+﻿using Domain.Entity;
 
-namespace Domain.Entity;
+namespace Domain.Dto;
 
-public class Guest
+public class GuestDto
 {
     public int Id { get; set; }
     public required string PassNumber { get; set; }
@@ -11,12 +11,8 @@ public class Guest
     public string? Email { get; set; }
     public string? Mobile { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public Guest_Address? Address { get; set; }
 
     public Room? Room { get; set; }
-    public int? RoomId { get; set; }
-
 }
 

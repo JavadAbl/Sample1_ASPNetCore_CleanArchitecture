@@ -20,6 +20,12 @@ internal class Seeder(AppDbContext dbContext) : ISeeder
             dbContext.Guests.AddRange(GetGuests());
             dbContext.SaveChanges();
         }
+
+        if (!dbContext.Cleaners.Any())
+        {
+            dbContext.Cleaners.AddRange(GetCleaners());
+            dbContext.SaveChanges();
+        }
     }
 
 
@@ -141,6 +147,20 @@ internal class Seeder(AppDbContext dbContext) : ISeeder
             LastName = "Ahmadi"
         }
         };
+    }
+
+    private Cleaner[] GetCleaners()
+    {
+        Cleaner[] seedData = new Cleaner[]
+            {
+            new Cleaner { Code = 1, FirstName = "John", LastName = "Doe" },
+            new Cleaner { Code = 2, FirstName = "Jane", LastName = "Smith" },
+            new Cleaner { Code = 3, FirstName = "Alice", LastName = "Johnson" },
+            new Cleaner { Code = 4, FirstName = "Bob", LastName = "Brown" },
+            new Cleaner { Code = 5, FirstName = "Charlie", LastName = "Davis" }
+            };
+
+        return seedData;
     }
 
 }

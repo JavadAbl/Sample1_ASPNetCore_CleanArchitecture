@@ -66,7 +66,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoomId")
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("RoomId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -124,19 +127,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("CleanerId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CleanerId1")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RoomId1")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("RoomId", "CleanerId");
 
                     b.HasIndex("CleanerId");
-
-                    b.HasIndex("CleanerId1");
-
-                    b.HasIndex("RoomId1");
 
                     b.ToTable("RoomCleaners");
                 });
@@ -145,9 +138,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entity.Room", "Room")
                         .WithOne("Guest")
-                        .HasForeignKey("Domain.Entity.Guest", "RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Domain.Entity.Guest", "RoomId");
 
                     b.OwnsOne("Domain.Entity.Guest_Address", "Address", b1 =>
                         {
@@ -189,27 +180,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entity.RoomCleaner", b =>
                 {
-                    b.HasOne("Domain.Entity.Cleaner", null)
+                    b.HasOne("Domain.Entity.Cleaner", "Cleaner")
                         .WithMany("RoomCleaners")
                         .HasForeignKey("CleanerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entity.Cleaner", "Cleaner")
-                        .WithMany()
-                        .HasForeignKey("CleanerId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entity.Room", null)
+                    b.HasOne("Domain.Entity.Room", "Room")
                         .WithMany("RoomCleaners")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entity.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
