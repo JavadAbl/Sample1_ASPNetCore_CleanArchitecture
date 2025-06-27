@@ -24,9 +24,11 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Guest>> GetAllAsync()
+    public async Task<IEnumerable<Guest>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await appDb.Guests.Include(g => g.Address)
+              .Include(g => g.Room)
+              .ToListAsync();
     }
 
     public async Task<Guest?> GetByIdAsync(int id)
@@ -34,9 +36,9 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return await appDb.Guests.FirstOrDefaultAsync(g => g.Id == id);
     }
 
-    public Task<Guest?> GetByPassNumberAsync(string passNumber)
+    public async Task<Guest?> GetByPassNumberAsync(string passNumber)
     {
-        throw new NotImplementedException();
+        return await appDb.Guests.FirstOrDefaultAsync(g => g.PassNumber == passNumber);
     }
 
     public Task UpdateAsync(Guest guest)

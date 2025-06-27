@@ -1,7 +1,9 @@
 
+using CarStoreApp.Server.Entities;
+
 namespace Domain.Entity;
 
-public class Cleaner
+public class Cleaner : BaseEntity
 {
     public int Id { get; set; }
     public required int Code { get; set; }

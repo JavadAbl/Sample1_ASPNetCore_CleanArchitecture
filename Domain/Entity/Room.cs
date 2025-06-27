@@ -1,8 +1,9 @@
-﻿using Domain.Enum;
+﻿using CarStoreApp.Server.Entities;
+using Domain.Enum;
 
 namespace Domain.Entity;
 
-public class Room
+public class Room : BaseEntity
 {
     public int Id { get; set; }
     public int Number { get; set; }
@@ -11,8 +12,6 @@ public class Room
     public Room_Type Type { get; set; }
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     public Guest? Guest { get; set; }
 

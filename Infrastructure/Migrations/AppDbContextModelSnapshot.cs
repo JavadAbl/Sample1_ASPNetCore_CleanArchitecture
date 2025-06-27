@@ -77,6 +77,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PassNumber")
+                        .IsUnique();
+
                     b.HasIndex("RoomId")
                         .IsUnique();
 

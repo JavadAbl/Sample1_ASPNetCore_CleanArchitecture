@@ -11,6 +11,8 @@ internal class GuestConfiguration : IEntityTypeConfiguration<Guest>
     public void Configure(EntityTypeBuilder<Guest> builder)
     {
         builder.OwnsOne(g => g.Address);
+        builder.HasIndex(g => g.PassNumber)
+            .IsUnique();
     }
 }
 

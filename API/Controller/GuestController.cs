@@ -1,28 +1,39 @@
 ﻿using Application.Interfaces;
 using Domain.Dto;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controller;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
-public class GuestController(IGuestService service) : ControllerBase
+public class GuestController(IGuestService service /*, IValidator<CreateGuestDto> validator*/) : ControllerBase
 {
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
         var guest = await service.GetById(id);
         if (guest == null)
-            return NotFound();
+            return NotFound("User not found");
 
         return Ok(guest);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateGuest([FromBody] CreateGuestDto createGuestDto)
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
-        var guestId = await service.Add(createGuestDto);
-        return Created("", guestId);
+        var guests = await service.GetAll();
+
+        return Ok(guests);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateGuestDto createGuestDto)
+    {
+        return Ok(createGuestDto);
+        /*   var result = await validator.ValidateAsync(createGuestDto);
+           var guestId = await service.Add(createGuestDto);
+           return Created(string.Empty, guestId);*/
     }
 }
 

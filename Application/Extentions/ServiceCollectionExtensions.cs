@@ -1,5 +1,8 @@
 ﻿using Application.Interfaces;
 using Application.Service;
+using Application.Validator;
+using Domain.Dto;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -19,6 +22,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGuestService, GuestService>();
         services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
+
+        //  services.AddScoped<IValidator<CreateGuestDto>, CreateGuestDtoValidator>();
     }
 
 }

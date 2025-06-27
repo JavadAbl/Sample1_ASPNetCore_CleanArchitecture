@@ -1,7 +1,9 @@
 
+using CarStoreApp.Server.Entities;
+
 namespace Domain.Entity;
 
-public class RoomCleaner
+public class RoomCleaner : BaseEntity
 {
     public int RoomId { get; set; }
     public required Room Room { get; set; }
