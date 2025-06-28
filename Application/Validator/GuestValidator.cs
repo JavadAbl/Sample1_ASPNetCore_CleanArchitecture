@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Application.Validator;
 
-internal class CreateGuestDtoValidator : AbstractValidator<CreateGuestDto>
+public class CreateGuestDtoValidator : AbstractValidator<CreateGuestDto>
 {
     public CreateGuestDtoValidator()
     {

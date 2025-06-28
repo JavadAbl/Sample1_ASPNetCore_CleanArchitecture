@@ -7,7 +7,7 @@ namespace API.Controller;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
-public class GuestController(IGuestService service /*, IValidator<CreateGuestDto> validator*/) : ControllerBase
+public class GuestController(IGuestService service, IValidator<CreateGuestDto> validator) : ControllerBase
 {
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
@@ -30,10 +30,12 @@ public class GuestController(IGuestService service /*, IValidator<CreateGuestDto
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateGuestDto createGuestDto)
     {
-        return Ok(createGuestDto);
-        /*   var result = await validator.ValidateAsync(createGuestDto);
-           var guestId = await service.Add(createGuestDto);
-           return Created(string.Empty, guestId);*/
+
+        /*    var result = await validator.ValidateAsync(createGuestDto);*/
+        return Ok(1);
+
+        var guestId = await service.Add(createGuestDto);
+        return Created(string.Empty, guestId);
     }
 }
 

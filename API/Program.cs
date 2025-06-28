@@ -1,10 +1,14 @@
+using API.Filter;
 using Application.Extentions;
 using Infrastructure.Extentions;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+builder.Services.AddControllers(op =>
+{
+    op.Filters.Add<FluentValidationFilterAsync>();
+});
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
@@ -26,5 +30,4 @@ using (app.Services.CreateScope())
     seeder.SeedAppDb();
 }
 
-
-app.Run();
+await app.RunAsync();

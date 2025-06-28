@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using System.Reflection;
+using Application.Interfaces;
 using Application.Service;
 using Application.Validator;
 using Domain.Dto;
@@ -24,6 +25,9 @@ public static class ServiceCollectionExtensions
 
 
         //  services.AddScoped<IValidator<CreateGuestDto>, CreateGuestDtoValidator>();
+        services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
+
+
     }
 
 }
