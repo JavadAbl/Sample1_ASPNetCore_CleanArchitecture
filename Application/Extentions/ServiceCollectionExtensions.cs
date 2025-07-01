@@ -1,8 +1,4 @@
 ﻿using System.Reflection;
-using Application.Interfaces;
-using Application.Service;
-using Application.Validator;
-using Domain.Dto;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +7,7 @@ namespace Application.Extentions;
 
 public static class ServiceCollectionExtensions
 {
+    private static Assembly ApplicationAssembly = Assembly.GetExecutingAssembly();
 
     public static void AddApplication(this IServiceCollection services)
     {
@@ -20,15 +17,10 @@ public static class ServiceCollectionExtensions
 
     private static void AddServices(IServiceCollection services)
     {
-        services.AddScoped<IGuestService, GuestService>();
-        services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
-
-
-        //  services.AddScoped<IValidator<CreateGuestDto>, CreateGuestDtoValidator>();
-        services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
-
+        services.AddAutoMapper(ApplicationAssembly);
+        services.AddValidatorsFromAssembly(ApplicationAssembly);
+        services.AddMediatR(op => op.RegisterServicesFromAssembly(ApplicationAssembly));
 
     }
-
 }
 

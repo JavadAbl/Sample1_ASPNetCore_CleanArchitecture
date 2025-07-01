@@ -1,12 +1,11 @@
-﻿
-using Domain.Dto;
+﻿using Application.Domain.Guests.Command;
 using FluentValidation;
 
-namespace Application.Validator;
+namespace Application.Domain.Guests.Validator;
 
-public class CreateGuestDtoValidator : AbstractValidator<CreateGuestDto>
+public class CreateGuestCommandValidator : AbstractValidator<CreateGuestCommand>
 {
-    public CreateGuestDtoValidator()
+    public CreateGuestCommandValidator()
     {
         RuleFor(x => x.PassNumber)
             .NotEmpty().WithMessage("Pass number is required2.")
