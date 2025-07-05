@@ -1,6 +1,4 @@
 
-using CarStoreApp.Server.Entities;
-
 namespace Domain.Entity;
 
 public class RoomCleaner : BaseEntity

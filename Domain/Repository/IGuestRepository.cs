@@ -9,7 +9,7 @@ public interface IGuestRepository
     Task<IEnumerable<Guest>> GetAllAsync();
     Task<int> AddAsync(Guest guest);
     Task UpdateAsync(Guest guest);
-    Task DeleteAsync(int id);
+    Task<bool> DeleteAsync(int id);
 
 }
 

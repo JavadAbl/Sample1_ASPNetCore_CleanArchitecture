@@ -19,9 +19,13 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return guest.Id;
     }
 
-    public Task DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var rowsAffected = await appDb.Guests
+        .Where(g => g.Id == id)
+        .ExecuteDeleteAsync();
+
+        return rowsAffected > 0;
     }
 
     public async Task<IEnumerable<Guest>> GetAllAsync()
@@ -41,8 +45,11 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return await appDb.Guests.FirstOrDefaultAsync(g => g.PassNumber == passNumber);
     }
 
-    public Task UpdateAsync(Guest guest)
+    public async Task UpdateAsync(Guest guest)
     {
-        throw new NotImplementedException();
+        appDb.Guests.Attach(guest);
+        // appDb.Entry(guest).State = EntityState.Modified;
+        appDb.Entry(guest).CurrentValues.SetValues(guest);
+        await appDb.SaveChangesAsync();
     }
 }

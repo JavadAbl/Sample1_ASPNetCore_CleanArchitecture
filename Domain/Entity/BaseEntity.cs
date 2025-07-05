@@ -1,4 +1,4 @@
-﻿namespace CarStoreApp.Server.Entities;
+﻿namespace Domain.Entity;
 
 public abstract class BaseEntity
 {

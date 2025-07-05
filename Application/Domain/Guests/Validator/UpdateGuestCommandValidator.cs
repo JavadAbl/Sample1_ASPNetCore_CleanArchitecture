@@ -2,17 +2,16 @@
 using FluentValidation;
 
 namespace Application.Domain.Guests.Validator;
-
-public class CreateGuestCommandValidator : AbstractValidator<CreateGuestCommand>
+public class UpdateGuestCommandValidator : AbstractValidator<CreateGuestCommand>
 {
-    public CreateGuestCommandValidator()
+    public UpdateGuestCommandValidator()
     {
-        RuleFor(x => x.PassNumber).NotNull().WithMessage("dsdf")
-            .NotEmpty().WithMessage("x is required2.")
+        RuleFor(x => x.PassNumber)
+            .NotEmpty().WithMessage("Pass number is required.")
             .Length(5, 20).WithMessage("Pass number must be between 5 and 20 characters.");
 
         RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage("First name is required2.")
+            .NotEmpty().WithMessage("First name is required.")
             .Length(2, 50).WithMessage("First name must be between 2 and 50 characters.");
 
         RuleFor(x => x.LastName)
@@ -26,4 +25,5 @@ public class CreateGuestCommandValidator : AbstractValidator<CreateGuestCommand>
     }
 
 }
+
 

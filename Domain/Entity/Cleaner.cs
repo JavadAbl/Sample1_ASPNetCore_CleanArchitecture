@@ -1,5 +1,4 @@
 
-using CarStoreApp.Server.Entities;
 
 namespace Domain.Entity;
 

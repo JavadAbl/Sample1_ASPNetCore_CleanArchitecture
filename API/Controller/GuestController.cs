@@ -1,5 +1,7 @@
 ﻿using Application.Domain.Guests.Command;
 using Application.Domain.Guests.Query;
+using Application.Domain.Guests.Validator;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +15,7 @@ public class GuestController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetById(int id)
     {
         var guest = await mediator.Send(new GetGuestByIdQuery(id));
+
         if (guest == null)
             return NotFound("User not found");
 
@@ -27,18 +30,36 @@ public class GuestController(IMediator mediator) : ControllerBase
         return Ok(guests);
     }
 
+
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateGuestCommand command)
+    public async Task<IActionResult> Create([FromBody] CreateGuestDto dto)
     {
+        var existingGuest = await mediator.Send(new GetGuestByPassNumberQuery(dto.PassNumber!));
 
-        var existingGuest = await mediator.Send(new GetGuestByPassNumberQuery(command.PassNumber!));
         if (existingGuest != null)
-        {
-            throw new InvalidOperationException($"Guest with pass number {command.PassNumber} already exists.");
-        }
+            return Conflict($"Guest with pass number {dto.PassNumber} already exists.");
 
+        CreateGuestCommand command = (CreateGuestCommand)dto;
         var guestId = await mediator.Send(command);
         return Created(string.Empty, guestId);
     }
-}
 
+    [HttpPost("{id}")]
+    public async Task<IActionResult> DeleteById([FromRoute] int id)
+    {
+        var isDeleted = await mediator.Send(new DeleteGuestByIdCommand(id));
+
+        if (!isDeleted)
+            return Problem(statusCode: StatusCodes.Status400BadRequest, detail: $"Guest with id {id} not found");
+
+        return NoContent();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update()
+    {
+
+
+        return NoContent();
+    }
+}

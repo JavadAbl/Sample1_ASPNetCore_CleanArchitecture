@@ -1,5 +1,4 @@
-﻿using CarStoreApp.Server.Entities;
-using Domain.Entity;
+﻿using Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
