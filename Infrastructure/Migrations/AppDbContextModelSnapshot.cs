@@ -26,12 +26,18 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -130,6 +136,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("CleanerId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("RoomId", "CleanerId");
 
                     b.HasIndex("CleanerId");
@@ -149,23 +161,18 @@ namespace Infrastructure.Migrations
                                 .HasColumnType("INTEGER");
 
                             b1.Property<string>("City")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Country")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("PostalCode")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("State")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Street")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.HasKey("GuestId");

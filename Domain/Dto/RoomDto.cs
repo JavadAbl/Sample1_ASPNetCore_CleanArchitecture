@@ -1,4 +1,5 @@
-﻿using Domain.Entity;
+﻿using Domain.Dto.Guest;
+using Domain.Entity;
 using Domain.Enum;
 
 namespace Domain.Dto;
@@ -12,7 +13,7 @@ public class RoomDto
     public Room_Type Type { get; set; }
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
-    public Guest? Guest { get; set; }
+    public GuestDto? Guest { get; set; }
 
     public ICollection<RoomCleaner> RoomCleaners { get; set; } = [];
 }

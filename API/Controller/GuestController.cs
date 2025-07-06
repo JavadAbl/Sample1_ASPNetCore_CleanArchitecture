@@ -1,6 +1,8 @@
 ﻿using Application.Domain.Guests.Command;
 using Application.Domain.Guests.Query;
 using Application.Domain.Guests.Validator;
+using AutoMapper;
+using Domain.Dto.Guest;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +11,9 @@ namespace API.Controller;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
-public class GuestController(IMediator mediator) : ControllerBase
+public class GuestController(IMediator mediator, IMapper mapper) : ControllerBase
 {
+    //--------------------------------------------------------------------
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -22,6 +25,7 @@ public class GuestController(IMediator mediator) : ControllerBase
         return Ok(guest);
     }
 
+    //--------------------------------------------------------------------
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -30,20 +34,21 @@ public class GuestController(IMediator mediator) : ControllerBase
         return Ok(guests);
     }
 
-
+    //--------------------------------------------------------------------
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateGuestDto dto)
     {
         var existingGuest = await mediator.Send(new GetGuestByPassNumberQuery(dto.PassNumber!));
 
         if (existingGuest != null)
-            return Conflict($"Guest with pass number {dto.PassNumber} already exists.");
+            return Problem(detail: $"Guest with pass number {dto.PassNumber} already exists.", statusCode: StatusCodes.Status409Conflict);
 
-        CreateGuestCommand command = (CreateGuestCommand)dto;
+        var command = mapper.Map<CreateGuestCommand>(dto);
         var guestId = await mediator.Send(command);
         return Created(string.Empty, guestId);
     }
 
+    //--------------------------------------------------------------------
     [HttpPost("{id}")]
     public async Task<IActionResult> DeleteById([FromRoute] int id)
     {
@@ -55,11 +60,16 @@ public class GuestController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
+    //--------------------------------------------------------------------
     [HttpPut]
-    public async Task<IActionResult> Update()
+    public async Task<IActionResult> Update([FromBody] UpdateGuestDto dto)
     {
+        var result = await mediator.Send(mapper.Map<UpdateGuestCommand>(dto));
 
-
-        return NoContent();
+        return result.Success switch
+        {
+            false => Problem(statusCode: result.StatusCode ?? 500, detail: result.Error),
+            true => NoContent()
+        };
     }
 }

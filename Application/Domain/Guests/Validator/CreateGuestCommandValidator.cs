@@ -1,14 +1,14 @@
-﻿using Application.Domain.Guests.Command;
+﻿using Domain.Dto.Guest;
 using FluentValidation;
 
 namespace Application.Domain.Guests.Validator;
 
-public class CreateGuestCommandValidator : AbstractValidator<CreateGuestCommand>
+public class CreateGuestDtoValidator : AbstractValidator<CreateGuestDto>
 {
-    public CreateGuestCommandValidator()
+    public CreateGuestDtoValidator()
     {
-        RuleFor(x => x.PassNumber).NotNull().WithMessage("dsdf")
-            .NotEmpty().WithMessage("x is required2.")
+        RuleFor(x => x.PassNumber)
+            .NotEmpty().WithMessage("PassNumber is required.")
             .Length(5, 20).WithMessage("Pass number must be between 5 and 20 characters.");
 
         RuleFor(x => x.FirstName)

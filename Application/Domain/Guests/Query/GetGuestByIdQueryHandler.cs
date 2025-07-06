@@ -1,8 +1,5 @@
-﻿
-
-using AutoMapper;
-using Domain.Dto;
-using Domain.Entity;
+﻿using AutoMapper;
+using Domain.Dto.Guest;
 using Domain.Repository;
 using MediatR;
 

@@ -1,4 +1,4 @@
-﻿using Domain.Dto;
+﻿using Domain.Dto.Guest;
 using Domain.Entity;
 
 namespace Application.Profile;

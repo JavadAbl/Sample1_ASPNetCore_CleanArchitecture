@@ -1,4 +1,4 @@
-﻿using Domain.Dto;
+﻿using Domain.Dto.Guest;
 using MediatR;
 
 namespace Application.Domain.Guests.Query

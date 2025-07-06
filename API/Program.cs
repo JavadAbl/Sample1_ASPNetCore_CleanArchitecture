@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllers(op =>
 {
     op.Filters.Add<FluentValidationFilterAsync>();
@@ -15,6 +16,7 @@ builder.Services.AddControllers(op =>
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+
 //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -36,6 +38,8 @@ builder.Services.AddProblemDetails(op =>
 
 builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
+
+//builder.Services.AddLogging();
 
 
 // App-------------------------------------------------

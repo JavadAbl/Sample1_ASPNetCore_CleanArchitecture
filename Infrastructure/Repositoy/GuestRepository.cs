@@ -45,11 +45,15 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return await appDb.Guests.FirstOrDefaultAsync(g => g.PassNumber == passNumber);
     }
 
-    public async Task UpdateAsync(Guest guest)
+    public async Task<bool> UpdateAsync(Guest guest)
     {
         appDb.Guests.Attach(guest);
-        // appDb.Entry(guest).State = EntityState.Modified;
+        appDb.Entry(guest).State = EntityState.Modified;
         appDb.Entry(guest).CurrentValues.SetValues(guest);
-        await appDb.SaveChangesAsync();
+
+        return await appDb.SaveChangesAsync() > 0;
     }
+
+    public Task<int> SaveChnagesAsync() => appDb.SaveChangesAsync();
+
 }

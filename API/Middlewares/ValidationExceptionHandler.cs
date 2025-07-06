@@ -16,6 +16,7 @@ namespace API.Middlewares
 
             var errors = validationException.Errors.GroupBy(e => e.PropertyName).ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
 
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             var problemContext = new ProblemDetailsContext
             {
                 HttpContext = httpContext,
