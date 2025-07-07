@@ -11,8 +11,6 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
     {
         if (guest == null)
             throw new ArgumentNullException(nameof(guest));
-        guest.CreatedAt = DateTime.UtcNow;
-        guest.UpdatedAt = DateTime.UtcNow;
         appDb.Guests.Add(guest);
         await appDb.SaveChangesAsync();
 
@@ -54,6 +52,6 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return await appDb.SaveChangesAsync() > 0;
     }
 
-    public Task<int> SaveChnagesAsync() => appDb.SaveChangesAsync();
+    public async Task<int> SaveChnagesAsync() => await appDb.SaveChangesAsync();
 
 }
