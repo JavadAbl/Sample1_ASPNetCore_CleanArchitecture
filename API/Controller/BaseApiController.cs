@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/[Action]")]
 public abstract class BaseApiController : ControllerBase
 {
     protected IActionResult FromResult(Result result) => result.ToActionResult(this);

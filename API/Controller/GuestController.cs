@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controller;
 
-[ApiController]
-[Route("api/[controller]/[action]")]
-public class GuestController(IMediator mediator, IMapper mapper) : ControllerBase
+
+public class GuestController(IMediator mediator, IMapper mapper) : BaseApiController
 {
     //--------------------------------------------------------------------
     [HttpGet("{id:int}")]

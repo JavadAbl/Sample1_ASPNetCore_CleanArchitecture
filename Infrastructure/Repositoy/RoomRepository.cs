@@ -7,6 +7,7 @@ namespace Infrastructure.Repositoy;
 
 internal class RoomRepository(AppDbContext appDb) : IRoomRepository
 {
+    //----------------------------------------------------------
     public async Task<int> AddAsync(Room room)
     {
         await appDb.Rooms.AddAsync(room);
@@ -14,6 +15,7 @@ internal class RoomRepository(AppDbContext appDb) : IRoomRepository
         return room.Id;
     }
 
+    //----------------------------------------------------------
     public async Task<bool> DeleteAsync(int id)
     {
         var rowsAffected = await appDb.Rooms
@@ -23,23 +25,28 @@ internal class RoomRepository(AppDbContext appDb) : IRoomRepository
         return rowsAffected > 0;
     }
 
+    //----------------------------------------------------------
     public async Task<IEnumerable<Room>> GetAllAsync()
     {
         return await appDb.Rooms.Include(r => r.Guest).ToListAsync();
     }
 
+    //----------------------------------------------------------
     public async Task<Room?> GetByIdAsync(int id)
     {
         return await appDb.Rooms.FirstOrDefaultAsync(r => r.Id == id);
     }
 
+    //----------------------------------------------------------
     public async Task<Room?> GetByNumberAsync(int number)
     {
         return await appDb.Rooms.FirstOrDefaultAsync(g => g.Number == number);
     }
 
+    //----------------------------------------------------------
     public async Task<int> SaveChnagesAsync() => await appDb.SaveChangesAsync();
 
+    //----------------------------------------------------------
     public Task<bool> UpdateAsync(Room room)
     {
         throw new NotImplementedException();
