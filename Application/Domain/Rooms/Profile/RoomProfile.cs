@@ -1,6 +1,8 @@
 
 
+using Application.Domain.Rooms.Command;
 using Domain.Dto;
+using Domain.Dto.Room;
 using Domain.Entity;
 
 namespace Application.Domain.Rooms.Profile;
@@ -11,12 +13,9 @@ internal class RoomProfile : AutoMapper.Profile
     public RoomProfile()
     {
         CreateMap<Room, RoomDto>();
-        /* CreateMap<CreateGuestDto, CreateGuestCommand>();
-        CreateMap<CreateGuestCommand, Guest>();
 
-        CreateMap<UpdateGuestDto, UpdateGuestCommand>();
-        CreateMap<UpdateGuestCommand, Guest>(); */
+        CreateMap<CreateRoomDto, Room>();
 
+        CreateMap<UpdateRoomDto, Room>();
     }
-
 }

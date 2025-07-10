@@ -1,4 +1,4 @@
-﻿/*using Application.Domain.Guests.Command;
+﻿using Application.Domain.Guests.Command;
 using FluentValidation;
 
 namespace Application.Domain.Guests.Validator;
@@ -27,4 +27,3 @@ public class UpdateGuestCommandValidator : AbstractValidator<CreateGuestCommand>
 }
 
 
-*/

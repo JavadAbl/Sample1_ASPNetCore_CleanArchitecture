@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using API.Filter;
 using API.Middlewares;
 using Application.Extentions;
@@ -8,22 +9,30 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Contoller--------------------------------------------------------
 builder.Services.AddControllers(op =>
 {
     op.Filters.Add<FluentValidationFilterAsync>();
-    // op.Filters.Add<FluentValidationFilter>();
-});
-
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddApplication();
+})
+.AddJsonOptions(options =>
+ {
+     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+ });
 
 //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+
+//Services--------------------------------------------------------
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
+
+//Configure--------------------------------------------------------
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
-    options.SuppressModelStateInvalidFilter = true;
+    // options.SuppressModelStateInvalidFilter = true;
 });
 
+//Error Handling--------------------------------------------------------
 builder.Services.AddProblemDetails(op =>
 {
     op.CustomizeProblemDetails = context =>
@@ -39,16 +48,15 @@ builder.Services.AddProblemDetails(op =>
 builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 
-//builder.Services.AddLogging();
 
 
-// App-------------------------------------------------
+// App----------------------------------------------------------------
 var app = builder.Build();
 app.UseExceptionHandler();
 app.UseRouting();
 app.MapControllers();
 
-// Seed the database-------------------------------------
+// Seed the database--------------------------------------------------
 using (app.Services.CreateScope())
 {
     var scope = app.Services.CreateScope();
