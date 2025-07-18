@@ -2,7 +2,7 @@
 
 namespace Domain.Dto.Guest;
 
-public record GuestDto
+public record GuestSummaryDto
 {
     public int Id { get; set; }
     public required string PassNumber { get; set; }
@@ -12,8 +12,5 @@ public record GuestDto
     public string? Mobile { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public Guest_Address? Address { get; set; }
-
-    public RoomSummaryDto? Room { get; set; }
-    //   public RoomDto? Room { get; set; }
 }
 

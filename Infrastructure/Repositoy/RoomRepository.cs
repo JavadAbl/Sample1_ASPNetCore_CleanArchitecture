@@ -34,7 +34,9 @@ internal class RoomRepository(AppDbContext appDb) : IRoomRepository
     //----------------------------------------------------------
     public async Task<Room?> GetByIdAsync(int id)
     {
-        return await appDb.Rooms.FirstOrDefaultAsync(r => r.Id == id);
+        var room = await appDb.Rooms.Include(r => r.Guest).FirstOrDefaultAsync(r => r.Id == id);
+
+        return room;
     }
 
     //----------------------------------------------------------

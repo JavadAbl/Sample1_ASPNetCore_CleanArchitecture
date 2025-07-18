@@ -1,12 +1,13 @@
 ﻿using Application.Interfaces;
 using Domain.Dto.Guest;
+using Domain.Dto.Room;
 using MediatR;
 
 namespace Application.Domain.Rooms.Command;
 
-public class AddGuestToRoomCommand(int roomId, int guestId) : IRequest<Result>
+public class AddGuestToRoomCommand(AddGuestToRoomDto dto) : IRequest<Result>
 {
-    public int RoomId { get; } = roomId;
-    public int GuestId { get; } = guestId;
+    public int RoomId { get; } = dto.RoomId!.Value;
+    public int GuestId { get; } = dto.GuestId!.Value;
 }
 

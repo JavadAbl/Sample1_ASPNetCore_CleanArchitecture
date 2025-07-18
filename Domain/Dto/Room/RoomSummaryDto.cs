@@ -1,8 +1,9 @@
-﻿using Domain.Enum;
+﻿using Domain.Entity;
+using Domain.Enum;
 
-namespace Domain.Entity;
+namespace Domain.Dto;
 
-public record Room : BaseEntity
+public record RoomSummaryDto
 {
     public int Id { get; set; }
     public int Number { get; set; }
@@ -12,10 +13,6 @@ public record Room : BaseEntity
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
 
-    public Guest? Guest { get; set; }
-
     public ICollection<RoomCleaner> RoomCleaners { get; set; } = [];
-
-
 }
 

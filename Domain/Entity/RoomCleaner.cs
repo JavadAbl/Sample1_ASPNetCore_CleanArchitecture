@@ -1,7 +1,7 @@
 
 namespace Domain.Entity;
 
-public class RoomCleaner : BaseEntity
+public record RoomCleaner : BaseEntity
 {
     public int RoomId { get; set; }
     public required Room Room { get; set; }

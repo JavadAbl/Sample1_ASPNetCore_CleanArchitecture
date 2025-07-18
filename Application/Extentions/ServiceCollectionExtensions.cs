@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
 
     private static void AddServices(IServiceCollection services)
     {
-        services.AddAutoMapper(ApplicationAssembly);
+        services.AddAutoMapper(cfg => cfg.AddMaps(ApplicationAssembly));
         services.AddMediatR(op => op.RegisterServicesFromAssembly(ApplicationAssembly));
         //   services.AddScoped<IValidator<CreateGuestCommand>, CreateGuestCommandValidator>();
         //  services.AddValidatorsFromAssemblyContaining<CreateGuestCommand>();

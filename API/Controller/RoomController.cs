@@ -26,7 +26,7 @@ public class RoomController(IMediator mediator) : BaseApiController
     [HttpPut]
     public async Task<IActionResult> Update(UpdateRoomDto dto) => FromResult(await mediator.Send(new UpdateRoomCommand(dto)));
 
-    [HttpPost]
-    public async Task<IActionResult> AddGuest(CreateRoomDto dto) => FromResult(await mediator.Send(new AddGuestToRoomCommand(dto)));
+    [HttpPut]
+    public async Task<IActionResult> AddGuestToRoom(AddGuestToRoomDto dto) => FromResult(await mediator.Send(new AddGuestToRoomCommand(dto)));
 
 }

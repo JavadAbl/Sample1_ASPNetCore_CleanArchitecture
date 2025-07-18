@@ -4,8 +4,9 @@ using API.Middlewares;
 using Application.Extentions;
 using Infrastructure.Extentions;
 using Infrastructure.Interfaces;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddControllers(op =>
 .AddJsonOptions(options =>
  {
      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+     //  options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+     // options.JsonSerializerOptions.WriteIndented = true; // Optional
  });
 
 //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
@@ -31,6 +34,19 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     // options.SuppressModelStateInvalidFilter = true;
 });
+
+
+//Logging---------------------------------------------------------------
+builder.Host.UseSerilog((context, cnf) =>
+{
+    cnf.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
+    cnf.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information);
+    cnf.WriteTo.Console();
+});
+
+//builder.Logging.ClearProviders();
+//builder.Logging.AddConsole(); // Or other logger you prefer
+
 
 //Error Handling--------------------------------------------------------
 builder.Services.AddProblemDetails(op =>
@@ -55,6 +71,7 @@ var app = builder.Build();
 app.UseExceptionHandler();
 app.UseRouting();
 app.MapControllers();
+app.UseSerilogRequestLogging();
 
 // Seed the database--------------------------------------------------
 using (app.Services.CreateScope())

@@ -14,8 +14,12 @@ internal class RoomProfile : AutoMapper.Profile
     {
         CreateMap<Room, RoomDto>();
 
+        CreateMap<Room, RoomSummaryDto>();
+
         CreateMap<CreateRoomDto, Room>();
 
         CreateMap<UpdateRoomDto, Room>();
+
+
     }
 }

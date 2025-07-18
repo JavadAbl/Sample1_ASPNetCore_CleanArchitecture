@@ -9,6 +9,8 @@ internal class GuestProfile : AutoMapper.Profile
     public GuestProfile()
     {
         CreateMap<Guest, GuestDto>();
+        CreateMap<Guest, GuestSummaryDto>();
+
         CreateMap<CreateGuestDto, CreateGuestCommand>();
         CreateMap<CreateGuestCommand, Guest>();
 

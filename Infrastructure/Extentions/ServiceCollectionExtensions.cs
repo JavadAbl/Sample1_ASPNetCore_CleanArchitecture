@@ -26,6 +26,8 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<AppDbContext>(op =>
         {
             op.UseSqlite(connectionString);
+            //sets full logging data
+            op.EnableSensitiveDataLogging(true);
         });
 
         /*services.AddDbContext<AppDbContext>(op =>

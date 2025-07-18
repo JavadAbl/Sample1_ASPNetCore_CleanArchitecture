@@ -7,6 +7,7 @@ namespace Infrastructure.Repositoy;
 
 internal class GuestRepository(AppDbContext appDb) : IGuestRepository
 {
+    //----------------------------------------------------------
     public async Task<int> AddAsync(Guest guest)
     {
         if (guest == null)
@@ -17,6 +18,7 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return guest.Id;
     }
 
+    //----------------------------------------------------------
     public async Task<bool> DeleteAsync(int id)
     {
         var rowsAffected = await appDb.Guests
@@ -26,6 +28,7 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return rowsAffected > 0;
     }
 
+    //----------------------------------------------------------
     public async Task<IEnumerable<Guest>> GetAllAsync()
     {
         return await appDb.Guests.Include(g => g.Address)
@@ -33,16 +36,19 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
               .ToListAsync();
     }
 
+    //----------------------------------------------------------
     public async Task<Guest?> GetByIdAsync(int id)
     {
-        return await appDb.Guests.FirstOrDefaultAsync(g => g.Id == id);
+        return await appDb.Guests.Include(g => g.Room).FirstOrDefaultAsync(g => g.Id == id);
     }
 
+    //----------------------------------------------------------
     public async Task<Guest?> GetByPassNumberAsync(string passNumber)
     {
-        return await appDb.Guests.FirstOrDefaultAsync(g => g.PassNumber == passNumber);
+        return await appDb.Guests.Include(g => g.Room).FirstOrDefaultAsync(g => g.PassNumber == passNumber);
     }
 
+    //----------------------------------------------------------
     public async Task<bool> UpdateAsync(Guest guest)
     {
         appDb.Guests.Attach(guest);
@@ -52,6 +58,7 @@ internal class GuestRepository(AppDbContext appDb) : IGuestRepository
         return await appDb.SaveChangesAsync() > 0;
     }
 
+    //----------------------------------------------------------
     public async Task<int> SaveChnagesAsync() => await appDb.SaveChangesAsync();
 
 }

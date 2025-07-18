@@ -3,7 +3,7 @@
 
 namespace Domain.Entity;
 
-public class Guest : BaseEntity
+public record Guest : BaseEntity
 {
     public int Id { get; set; }
     public required string PassNumber { get; set; }
